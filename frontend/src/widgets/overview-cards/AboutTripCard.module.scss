@@ -1,0 +1,29 @@
+.about-trip-card {
+    background-color: var(--color-surface);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 20px;
+    border-radius: var(--card-border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+.about-trip-card-title {
+    font-size: 17px;
+    text-align: start;
+    margin-bottom: 16px;
+}
+.about-trip-card-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 13px;
+    tr {
+        text-align: start;
+        td:first-child {
+            width: 30%;
+            color: #7e756c;
+            font-weight: 400;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+.expense-container {
+    background-color: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow:
+        0 1px 2px 0 rgba(43, 38, 34, 0.03),
+        0 10px 26px -12px rgba(43, 38, 34, 0.14);
+
+    .expense-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+
+        .expense-header-title {
+            font-size: 17px;
+            color: var(--color-text);
+        }
+
+        .expense-header-right {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            .expense-header-filter {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .expense-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+}

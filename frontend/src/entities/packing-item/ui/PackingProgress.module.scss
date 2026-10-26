@@ -1,0 +1,58 @@
+.progress-container {
+    display: flex;
+    background-color: #fff1e6;
+    border-radius: 24px;
+    border: 1px solid #f6dcc8;
+    padding: 16px 22px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.progress-status {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.progress-donut {
+    /* Базовые размеры и круглая форма */
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-donut::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+
+    background: conic-gradient(
+        #e8804c 0% var(--progress),
+        #f9d4bf var(--progress) 100%
+    );
+
+    mask: radial-gradient(circle, transparent 63%, #000 63%);
+    -webkit-mask: radial-gradient(circle, transparent 63%, #000 63%);
+
+    /* Гарантируем, что кольцо будет на заднем плане */
+    z-index: 0;
+}
+
+.progress-text {
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    color: #1a1a1a;
+    z-index: 2;
+    font-family: var(--font-display);
+}

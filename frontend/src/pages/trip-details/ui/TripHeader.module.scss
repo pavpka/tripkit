@@ -1,0 +1,36 @@
+.trip-header {
+    color: var(--color-text);
+    font-family: 'Unbounded, sans-serif';
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.icon {
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+}
+
+.trip-header-left {
+    display: flex;
+    gap: 18px;
+}
+
+.btn-text {
+    color: var(--color-text);
+}
+
+.btn-container {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-cancel button {
+    background-color: unset;
+}

@@ -1,0 +1,30 @@
+.stepper-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4efe9;
+    border-radius: 15px;
+    padding: 5px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.stepper-btn {
+    background-color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #2b2622;
+    border: none;
+    box-shadow: 0 2px 8px -4px rgba(43, 38, 34, 0.25);
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.stepper-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+}

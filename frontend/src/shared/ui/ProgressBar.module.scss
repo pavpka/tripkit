@@ -1,0 +1,22 @@
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #f4efe9;
+}
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 5px;
+    max-width: 100%;
+}
+.unset {
+    background-color: #b9b1a7;
+}
+.ok {
+    background-color: #4fa374;
+}
+.warning {
+    background-color: #e2a228;
+}
+.over {
+    background-color: #d9485f;
+}

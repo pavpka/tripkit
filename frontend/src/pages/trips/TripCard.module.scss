@@ -1,0 +1,65 @@
+.trip-item {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    cursor: pointer;
+    width: 356px;
+    border-radius: 24px;
+    text-decoration: none;
+    color: var(--color-text);
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow:
+        0 2px 4px 0 rgba(43, 38, 34, 0.04),
+        0 18px 36px -14px rgba(43, 38, 34, 0.22);
+
+    &:hover {
+        outline: 2px solid #b9592a;
+    }
+}
+
+.trip-item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trip-item-title {
+    text-align: start;
+    font-size: 17px;
+    line-height: 1.5;
+    margin-top: 14px;
+}
+
+.trip-item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 13px;
+    color: #7e756c;
+}
+
+.trip-item-progress-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.trip-item-emoji {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.trip-item-status-badge {
+    font-size: 20px;
+    font-weight: 500;
+    vertical-align: middle;
+    margin-right: 6px;
+}

@@ -1,0 +1,23 @@
+.status-card {
+    background-color: var(--color-surface);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text);
+    border-radius: var(--card-border-radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+.status-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.status-card-title {
+    font-size: 17px;
+    text-align: start;
+}
+.status-card-hint {
+    font-size: 13px;
+}

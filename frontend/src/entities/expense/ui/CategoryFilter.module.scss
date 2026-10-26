@@ -1,0 +1,21 @@
+.category-filter {
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--shadow);
+    box-sizing: border-box;
+}
+.category-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.category-icon-image {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}

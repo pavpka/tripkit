@@ -1,0 +1,53 @@
+.category-label {
+    font-size: 13px;
+    font-weight: 700;
+}
+.category-grid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-chip {
+    background-color: #f4efe9;
+    color: #7e756c;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.category-chip-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 6px;
+}
+
+.category-chip-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30%;
+}
+
+.category-chip-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.category-chip-label {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.selected {
+    box-shadow: inset 0 0 0 2px #ff6b35;
+    background-color: #fff;
+    color: var(--color-text);
+}

@@ -1,0 +1,51 @@
+.checkbox-root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.label-content {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+input.checkbox-input {
+    appearance: none;
+    display: none;
+}
+
+input.checkbox-input:checked + .checkbox-label {
+    background-color: #4fa374;
+    border-color: #4fa374;
+}
+
+input.checkbox-input:checked + .checkbox-label::before {
+    content: '';
+    background-image: url('../../../public/icons/shared/check.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+input.checkbox-input:checked ~ .label-content {
+    text-decoration: line-through;
+    color: #7e756c;
+    text-decoration-color: #000;
+}
+
+.checkbox-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d3c9be;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+}

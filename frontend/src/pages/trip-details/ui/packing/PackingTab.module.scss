@@ -1,0 +1,21 @@
+.masonry-wrapper {
+    /* Задает количество колонок (браузер сам рассчитает ширину) */
+    column-count: 3;
+    /* Расстояние между колонками */
+    column-gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .masonry-wrapper {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .masonry-wrapper {
+        column-count: 1;
+    }
+}

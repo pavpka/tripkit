@@ -1,0 +1,36 @@
+button.btn-primary,
+button.btn-secondary {
+    border: none;
+    cursor: pointer;
+    border-radius: 90px;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 11px 20px;
+    height: inherit;
+    font-family: var(--font-body);
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    box-shadow: 0px 8px 18px -8px rgba(232, 128, 76, 0.67);
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #fff;
+    color: #7e756c;
+}
+
+button.btn-primary:disabled,
+button.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary img,
+.btn-secondary img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 8px;
+}

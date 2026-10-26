@@ -1,0 +1,11 @@
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin: 20px 0;
+    padding: 5px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 9999px;
+    width: fit-content;
+    box-shadow: var(--shadow);
+}

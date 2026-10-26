@@ -1,0 +1,39 @@
+.tab-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 15px;
+    vertical-align: middle;
+
+    border-radius: 9999px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    color: #7e756c;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.tab-button:focus-visible {
+    outline: 2px solid #b9592a;
+    outline-offset: 2px;
+}
+
+.active-tab-button {
+    background-color: #ffeee4;
+    color: #b9592a;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    filter: invert(49%) sepia(8%) saturate(543%) hue-rotate(192deg)
+        brightness(92%) contrast(88%);
+}
+
+.active-tab-button .icon {
+    filter: invert(41%) sepia(35%) saturate(2250%) hue-rotate(345deg)
+        brightness(91%) contrast(92%);
+}

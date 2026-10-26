@@ -1,0 +1,60 @@
+.expense-row {
+    margin: 0 16px 2px;
+
+    td {
+        border-top: 1px solid #eee7df;
+        text-align: start;
+
+        &.expense-row-date {
+            font-size: 14px;
+            color: #7e756c;
+            width: 6%;
+        }
+
+        &.expense-row-icon {
+            width: 5%;
+        }
+
+        &.expense-row-title {
+            width: 65%;
+
+            .expense-row-title-text {
+                font-size: 14px;
+                padding: 12px 0;
+            }
+        }
+
+        &.expense-row-amount {
+            width: 15%;
+            text-align: end;
+            font-size: 14px;
+        }
+
+        &.expense-row-more .expense-row-more-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            & img {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+}
+
+.expense-row-icon-image {
+    width: 35px;
+    height: 35px;
+    background-color: #f5f5f5;
+    border-radius: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 14px;
+
+    & img {
+        width: 18px;
+    }
+}

@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Onest';
+    src: url('../../assets/fonts/onest-v11-cyrillic_latin-regular.woff2')
+        format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Onest';
+    src: url('../../assets/fonts/Onest-Medium.ttf') format('ttf');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Onest';
+    src: url('../../assets/fonts/onest-v11-cyrillic_latin-600.woff2')
+        format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Onest';
+    src: url('../../assets/fonts/onest-v11-cyrillic_latin-700.woff2')
+        format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Unbounded';
+    src: url('../../assets/fonts/unbounded-v12-cyrillic_latin-500.woff2')
+        format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Unbounded';
+    src: url('../../assets/fonts/unbounded-v12-cyrillic_latin-600.woff2')
+        format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Unbounded';
+    src: url('../../assets/fonts/unbounded-v12-cyrillic_latin-700.woff2')
+        format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}

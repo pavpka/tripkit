@@ -1,0 +1,62 @@
+.sidebar {
+    width: 250px;
+    background: #fff;
+    padding: 20px 14px;
+    margin: 16px;
+    border-radius: 28px;
+}
+.app-title {
+    font-size: 18px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.54%;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    border-radius: 9999px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    color: #7e756c;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.active-tab-button {
+    background-color: #ffeee4;
+    color: #b9592a;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: sub;
+    margin-right: 8px;
+    filter: invert(49%) sepia(8%) saturate(543%) hue-rotate(192deg)
+        brightness(92%) contrast(88%);
+}
+
+.active-tab-button .icon {
+    filter: invert(41%) sepia(35%) saturate(2250%) hue-rotate(345deg)
+        brightness(91%) contrast(92%);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 5px 15px;
+}
+
+.nav > a {
+    text-decoration: none;
+    width: 100%;
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+}
