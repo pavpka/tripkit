@@ -22,3 +22,11 @@ export interface Activity {
     note: string | null;
     order: number;
 }
+
+export type ActivityInput = Omit<Activity, 'id' | 'tripId'>;
+
+export interface CategoryDetails {
+    label: string;
+    icon: string;
+    bgColor: string;
+}

@@ -1,7 +1,7 @@
 import { ExpenseRow } from './ExpenseRow';
 import { Button } from '@/shared/ui/Button';
 import styles from './ExpenseTable.module.scss';
-import SegmentControl from '@/shared/ui/SegmentControl';
+import {SegmentControl} from '@/shared/ui/SegmentControl';
 import { useState } from 'react';
 import type { ActivityId } from '@/shared/types';
 import type { Expense } from '../model';

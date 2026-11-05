@@ -1,15 +1,15 @@
 import { motion } from 'motion/react';
 import styles from './SegmentControl.module.scss';
 
-type Option<T extends string> = { value: T; label: string };
+type Option<T extends string | null> = { value: T; label: string };
 
-type SegmentedControlProps<T extends string> = {
+type SegmentedControlProps<T extends string | null> = {
     options: Option<T>[];
-    value: T;
-    onChange: (value: T) => void;
+    value: T | null;
+    onChange: (value: T | null) => void;
 };
 
-export default function SegmentControl<T extends string>({
+export function SegmentControl<T extends string | null>({
     options,
     value,
     onChange,

@@ -7,6 +7,9 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: 5px;
 }
 
 .category-chip {

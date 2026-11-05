@@ -22,10 +22,11 @@ export function DayList({
 
     return (
         <div className="day-list">
-            {days.map((day) => (
+            {days.map((day, index) => (
                 <div className="day-card" key={day.id}>
                     <Itinerary
                         day={day}
+                        index={index}
                         activities={activities.filter(
                             (activity) => activity.dayId === day.id,
                         )}

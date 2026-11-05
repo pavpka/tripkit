@@ -26,3 +26,14 @@ export const formatDateRange = (
     from: string | null,
     to: string | null,
 ): string => (from && to ? `${from} - ${to}` : '—');
+
+
+export const formatDayDate = (date: string): string => {
+    const parsed = new Date(`${date.slice(0, 10)}T00:00:00`);
+    const weekday = parsed.toLocaleDateString('ru-RU', { weekday: 'short' });
+    const day = parsed.toLocaleDateString('ru-RU', { day: '2-digit' });
+    const month = parsed
+        .toLocaleDateString('ru-RU', { month: 'short' })
+        .replace('.', '');
+    return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)}, ${day} ${month}`;
+};
