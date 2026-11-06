@@ -38,3 +38,23 @@ export function useUpdatePackingItem(tripId: TripId) {
         onSettled: () => queryClient.invalidateQueries({ queryKey }),
     });
 }
+
+export function useDeletePackingItem(tripId: TripId) {
+    const queryClient = useQueryClient();
+    const { queryKey } = packingItemQueries.byTrip(tripId);
+
+    return useMutation({
+        mutationFn: (id: PackingItem['id']) => packingItemApi.delete(tripId, id),
+        onMutate: async (id) => {
+            await queryClient.cancelQueries({ queryKey });
+            const previous = queryClient.getQueryData(queryKey);
+            queryClient.setQueryData(queryKey, (items) => items?.filter((item) => item.id !== id));
+            return { previous };
+        },
+        onError: (_error, _id, context) => {
+            if (context?.previous)
+                queryClient.setQueryData(queryKey, context.previous);
+        },
+        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+    });
+}

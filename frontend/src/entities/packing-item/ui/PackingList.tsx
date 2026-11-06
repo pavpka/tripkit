@@ -13,11 +13,13 @@ export function PackingList({
     items,
     onToggle,
     onAdd,
+    onDelete
 }: {
     category: PackingCategory;
     items: PackingItem[];
     onToggle: (id: PackingItem['id'], packed: boolean) => void;
     onAdd: (category: PackingCategory) => void;
+    onDelete: (item: PackingItem) => void;
 }) {
     const sortedItems = sortedByPacked(items);
     const packedItems = sortedItems.filter((item) => item.packed);
@@ -28,7 +30,7 @@ export function PackingList({
                 <div className={styles.categoryHeaderContent}>
                     <div className={styles.categoryIcon}>
                         <img
-                            src={`/icons/packing-items/${PACKING_CATEGORY_DETAILS[category].icon}`}
+                            src={PACKING_CATEGORY_DETAILS[category].icon}
                             alt={category}
                             className={styles.categoryIconImage}
                         />
@@ -49,6 +51,7 @@ export function PackingList({
                         key={item.id}
                         item={item}
                         onToggle={onToggle}
+                        onDelete={onDelete}
                     />
                 ))}
             </ul>
