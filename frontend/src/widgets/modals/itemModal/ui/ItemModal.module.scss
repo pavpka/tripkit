@@ -64,8 +64,31 @@ button.modal-close {
 
 .modal-footer {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
     gap: 10px;
+
+    & > button {
+        padding-left: 4px;
+    }
+
+    .modal-footer-actions {
+        display: flex;
+        gap: 10px;
+        margin-left: auto;
+    }
+
+    .modal-footer-delete-icon {
+        width: 16px;
+        height: 16px;
+        filter: invert(41%) sepia(35%) saturate(3783%) hue-rotate(326deg) brightness(91%) contrast(88%);
+        position: relative;
+        top: -1px;
+    }
+
+    .modal-footer-delete-text {
+        color: var(--color-bad);
+    }
 }
 
 input.item-modal-input {

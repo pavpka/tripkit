@@ -2,7 +2,7 @@ import styles from './Button.module.scss';
 
 interface ButtonProps {
     children: React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
     type: 'button' | 'submit' | 'reset';
     variant?: 'primary' | 'secondary';
     disabled?: boolean;

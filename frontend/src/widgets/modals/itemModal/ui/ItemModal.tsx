@@ -9,25 +9,37 @@ import { useParams } from 'react-router';
 import {
     PACKING_CATEGORY_DETAILS,
     useCreatePackingItem,
+    useUpdatePackingItem,
     type PackingCategory,
+    type PackingItem,
 } from '@/entities/packing-item';
+
+type ItemModalProps = {
+    onClose: () => void;
+    category?: PackingCategory | null;
+    item?: PackingItem;
+    onDelete?: (item: PackingItem) => void;
+}
 
 export function ItemModal({
     onClose,
     category,
-}: {
-    onClose: () => void;
-    category?: PackingCategory | null;
-}) {
-    const [value, setValue] = useState('');
-    const [quantity, setQuantity] = useState(1);
+    item,
+    onDelete,
+}: ItemModalProps) {
+    const isEdit = Boolean(item);
+    const [value, setValue] = useState(item?.label ?? '');
+    const [quantity, setQuantity] = useState(item?.qty ?? 1);
     const [selectedCategory, setSelectedCategory] =
-        useState<PackingCategory | null>(category || null);
-    const [packed, setPacked] = useState(false);
+        useState<PackingCategory | null>(item?.category ?? category ?? null);
+    const [packed, setPacked] = useState(item?.packed ?? false);
     const modalRef = useRef<HTMLDivElement>(null);
 
     const { tripId = '' } = useParams();
     const createItem = useCreatePackingItem(tripId);
+    const updateItem = useUpdatePackingItem(tripId);
+
+    const isPending = createItem.isPending || updateItem.isPending;
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -54,10 +66,12 @@ export function ItemModal({
             alert('Please select a category');
             return;
         }
-        createItem.mutate(
-            { label: value, qty: quantity, category: selectedCategory, packed },
-            { onSuccess: onClose },
-        );
+        const payload = { label: value, qty: quantity, category: selectedCategory, packed };
+        if (item) {
+            updateItem.mutate({ ...item, ...payload }, { onSuccess: onClose });
+            return
+        }
+        createItem.mutate(payload, { onSuccess: onClose });
     };
 
     return ReactDOM.createPortal(
@@ -97,7 +111,7 @@ export function ItemModal({
                                 </div>
                                 <div>
                                     <h3 className={styles.modalTitle}>
-                                        Item Modal
+                                        {isEdit ? 'Изменить вещь' : 'Новая вещь'}
                                     </h3>
                                     <div
                                         style={{
@@ -185,7 +199,7 @@ export function ItemModal({
 
                         <div className={styles.packedContainer}>
                             <CheckboxInput
-                                id="add-packed-item"
+                                id={item ? `edit-packed-${item.id}` : 'add-packed-item'}
                                 checked={packed}
                                 onChange={setPacked}
                             />
@@ -199,26 +213,41 @@ export function ItemModal({
 
                         {/* Footer */}
                         <div className={styles.modalFooter}>
-                            <Button
-                                onClick={onClose}
-                                type="button"
-                                variant="secondary"
-                            >
-                                Отмена
-                            </Button>
-                            <Button
-                                onClick={() => {}}
-                                type="submit"
-                                variant="primary"
-                                disabled={createItem.isPending}
-                            >
-                                <img
-                                    src="/icons/shared/plus.svg"
-                                    alt="add"
-                                    className="plus-icon"
-                                />
-                                Добавить
-                            </Button>
+                            {item && onDelete && (
+                                <Button type="button" variant="secondary" onClick={() => onDelete(item)}>
+                                    <img
+                                        src="/icons/shared/trash.svg"
+                                        alt="delete"
+                                        className={styles.modalFooterDeleteIcon}
+                                    />
+                                    <span className={styles.modalFooterDeleteText}>Удалить</span>
+                                </Button>
+                            )}
+                            <div className={styles.modalFooterActions}>
+                                <Button
+                                    onClick={onClose}
+                                    type="button"
+                                    variant="secondary"
+                                >
+                                    Отмена
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    disabled={isPending}
+                                >
+                                    {isEdit ? 'Сохранить' : (
+                                        <>
+                                            < img
+                                                src="/icons/shared/plus.svg"
+                                                alt="add"
+                                                className="plus-icon"
+                                            />
+                                            Добавить
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
                         </div>
                     </form>
                 </div>

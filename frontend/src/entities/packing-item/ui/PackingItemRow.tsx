@@ -6,12 +6,10 @@ type Props = {
     item: PackingItem;
     onToggle: (id: PackingItem['id'], packed: boolean) => void;
     onDelete: (item: PackingItem) => void;
+    onEdit: (item: PackingItem) => void;
 };
 
-export function PackingItemRow({ item, onToggle, onDelete }: Props) {
-    const onEdit = () => {
-        console.log('edit');
-    };
+export function PackingItemRow({ item, onToggle, onDelete, onEdit }: Props) {
     return (
         <li>
             <div className={styles.itemContent}>
@@ -25,7 +23,7 @@ export function PackingItemRow({ item, onToggle, onDelete }: Props) {
                     <span>{item.label}</span>
                 </CheckboxInput>
                 <div className={styles.buttonsContainer}>
-                    <button className={styles.button} onClick={onEdit}>
+                    <button className={styles.button} onClick={() => onEdit(item)}>
                         <img src="/icons/shared/edit.svg" alt="edit" className={styles.icon} />
                     </button>
                     <button className={styles.button} onClick={() => onDelete(item)}>

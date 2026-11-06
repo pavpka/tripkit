@@ -13,13 +13,15 @@ export function PackingList({
     items,
     onToggle,
     onAdd,
-    onDelete
+    onDelete,
+    onEdit
 }: {
     category: PackingCategory;
     items: PackingItem[];
     onToggle: (id: PackingItem['id'], packed: boolean) => void;
     onAdd: (category: PackingCategory) => void;
     onDelete: (item: PackingItem) => void;
+    onEdit: (item: PackingItem) => void;
 }) {
     const sortedItems = sortedByPacked(items);
     const packedItems = sortedItems.filter((item) => item.packed);
@@ -51,6 +53,7 @@ export function PackingList({
                         key={item.id}
                         item={item}
                         onToggle={onToggle}
+                        onEdit={onEdit}
                         onDelete={onDelete}
                     />
                 ))}

@@ -16,6 +16,10 @@ import { ItemModal } from '@/widgets/modals/itemModal';
 import { UndoSnackbar } from '@/shared/ui/UndoSnackbar';
 import { useDeferredPackingDelete } from '@/features/delete-packing-item';
 
+type ItemModalState =
+    | { type: 'create'; category?: PackingCategory }
+    | { type: 'edit'; item: PackingItem };
+
 export default function Packing() {
     const { tripId = '' } = useParams();
     const packingItemsQuery = packingItemQueries.byTrip(tripId);
@@ -28,8 +32,8 @@ export default function Packing() {
     const { pending, handleDelete, handleUndo } =
         useDeferredPackingDelete(tripId);
 
-    const [modalCategory, setModalCategory] = useState<
-        PackingCategory | null | undefined
+    const [modal, setModal] = useState<
+        ItemModalState | null
     >(null);
 
     const handleToggle = (id: PackingItem['id'], packed: boolean) => {
@@ -48,7 +52,7 @@ export default function Packing() {
         <div>
             <PackingProgress
                 items={visibleItems}
-                onAdd={() => setModalCategory(undefined)}
+                onAdd={() => setModal({ type: 'create' })}
             />
             <div className={styles.masonryWrapper}>
                 {groupByCategory(visibleItems).map((c) => (
@@ -57,15 +61,22 @@ export default function Packing() {
                         category={c.category}
                         items={c.items}
                         onToggle={handleToggle}
-                        onAdd={setModalCategory}
+                        onAdd={(category) => setModal({ type: 'create', category })}
                         onDelete={handleDelete}
+                        onEdit={(item) => setModal({ type: 'edit', item })}
                     />
                 ))}
             </div>
-            {modalCategory !== null && (
+            {modal !== null && (
                 <ItemModal
-                    onClose={() => setModalCategory(null)}
-                    category={modalCategory}
+                    key={modal.type === 'edit' ? modal.item.id : 'new'}
+                    onClose={() => setModal(null)}
+                    category={modal.type === 'create' ? modal.category : undefined}
+                    item={modal.type === 'edit' ? modal.item : undefined}
+                    onDelete={(item) => {
+                        handleDelete(item);
+                        setModal(null);
+                    }}
                 />
             )}
             {pending && (
