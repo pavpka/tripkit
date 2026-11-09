@@ -20,3 +20,6 @@ export const ACTIVITY_ICONS: Record<ActivityType, string> = {
 
 export const getActivityIcon = (type: string): string =>
     (ACTIVITY_ICONS as Record<string, string>)[type] ?? ACTIVITY_ICONS.other;
+
+export const getActivityBgColor = (type: string): string =>
+    ACTIVITY_CATEGORY_DETAILS[type as ActivityType].bgColor ?? ACTIVITY_CATEGORY_DETAILS.other.bgColor;

@@ -21,7 +21,7 @@ export function ExpenseTable({ expenses, activityTitles }: ExpenseTableProps) {
     const sorted = [...expenses].sort((a, b) =>
         sortBy === 'date'
             ? b.date.localeCompare(a.date) || a.id.localeCompare(b.id)
-            : b.amountMinor - a.amountMinor || a.id.localeCompare(b.id),
+            : b.amount - a.amount || a.id.localeCompare(b.id),
     );
 
     return (

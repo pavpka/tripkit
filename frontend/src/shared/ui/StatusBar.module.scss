@@ -21,6 +21,8 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 8px;
+    color: var(--color-muted);
 }
 
 .status-bar-item {
@@ -28,20 +30,29 @@
     height: 32px;
     background-color: #f4efe9;
     border-radius: 999px;
-}
-
-.status-bar-item-done {
-    background-color: green;
+    color: var(--color-muted);
+    font-size: 13px;
+    line-height: 2.5;
 }
 
 .status-bar-item-active {
-    background-color: orange;
+    color: var(--color-text)
+}
+
+.status-bar-item-done .status-bar-item {
+    background-color: var(--color-ok);
+}
+
+.status-bar-item-active .status-bar-item {
+    background-color: var(--color-accent);
+    color: #fff;
+    outline: 5px solid #f4efe9;
 }
 
 .status-bar-item-separator {
     width: 84%;
     position: relative;
-    top: -43px;
+    top: -50px;
     height: 2px;
     background-color: #f4efe9;
 }
@@ -49,4 +60,10 @@
 .status-bar-item-title {
     font-size: 13px;
     text-align: center;
+}
+
+img.status-bar-item-check {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
 }

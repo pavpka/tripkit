@@ -15,11 +15,7 @@
 .overview-cards {
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 20px;
-    .overview-cards-item {
-        background-color: var(--color-surface);
-        border-radius: var(--card-border-radius);
-        padding: 16px;
-    }
+    flex-wrap: wrap;
 }

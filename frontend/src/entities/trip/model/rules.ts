@@ -112,6 +112,10 @@ export const getStatusHint = (trip: Trip, tripActivitiesCount: number) => {
             return '';
         case 'booked':
             return getBookedHint(trip, new Date());
+        case 'ongoing':
+            return `Осталось ${getTripDaysCount(trip)} дней поездки`;
+        case 'done':
+            return 'Поездка завершена';
         default:
             return '';
     }

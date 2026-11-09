@@ -22,12 +22,13 @@ export function StatusBar({ step }: { step: number }) {
                     return (
                         <div
                             key={item.step}
-                            className={styles.statusBarItemContainer}
+                            className={`${styles.statusBarItemContainer} ${isDone ? styles.statusBarItemDone : item.step === step ? styles.statusBarItemActive : ''}`}
                         >
                             <div
-                                className={`${styles.statusBarItem} ${isDone ? styles.statusBarItemDone : item.step === step ? styles.statusBarItemActive : ''}`}
-                            >
-                                {isDone ? '.' : item.step}
+                                className={styles.statusBarItem}>
+                                {isDone ?
+                                    <img src='/icons/shared/check.svg' alt='check' className={styles.statusBarItemCheck} />
+                                    : item.step}
                             </div>
 
                             <div className={styles.statusBarItemTitle}>

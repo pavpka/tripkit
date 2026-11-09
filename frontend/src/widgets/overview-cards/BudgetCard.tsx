@@ -21,7 +21,7 @@ export default function BudgetCard({
     return (
         <div className={styles.budgetCard}>
             <div className={styles.budgetCardTitle}>
-                <div className={styles.budgetCardTitleText}>Бюджет</div>
+                <div className={styles.budgetCardTitleText}>💰 Бюджет</div>
                 <div
                     className={styles.budgetCardPercent}
                     style={{ color: BUDGET_STATUS_COLORS[status] }}
@@ -34,15 +34,9 @@ export default function BudgetCard({
             </div>
             <div className={styles.budgetCardValue}>
                 {isUnset
-                    ? `${spent} ${currency}`
-                    : `${spent} из ${total} ${currency}`}
-            </div>
-            <div className={styles.budgetCardRemaining}>
-                {isUnset
-                    ? 'Бюджет не задан'
-                    : remaining >= 0
-                      ? `осталось ${remaining} ${currency}`
-                      : `перерасход на ${Math.abs(remaining)} ${currency}`}
+                    ? `${spent} ${currency} · Бюджет не задан`
+                    : `${spent} из ${total} ${currency} · ${remaining >= 0 ? `осталось ${remaining} ${currency}` : `перерасход на ${Math.abs(remaining)} ${currency}`}`}
+
             </div>
         </div>
     );

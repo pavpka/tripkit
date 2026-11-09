@@ -12,5 +12,5 @@ export type TripDetailsContext = {
     spent: number;
     places: Activity[];
     expensesByCategory: ExpensesByCategory;
-    tripExpenses: Expense[];
+    expenses: Expense[];
 };

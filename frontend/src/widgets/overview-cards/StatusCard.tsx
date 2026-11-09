@@ -22,12 +22,7 @@ export default function StatusCard({
                 <div className={styles.statusCardTitle}>Статус</div>
                 <span className={styles.statusCardHint}>{hint}</span>
             </div>
-            <div
-                style={{
-                    opacity: tripStatusIndex === 0 ? 0.5 : 1,
-                    cursor: tripStatusIndex === 0 ? 'not-allowed' : 'pointer',
-                }}
-            >
+            <div>
                 <StatusBar step={tripStatusIndex} />
             </div>
         </div>

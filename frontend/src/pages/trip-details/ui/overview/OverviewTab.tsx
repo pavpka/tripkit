@@ -30,7 +30,7 @@ export default function Overview() {
             value: getTripDaysCount(trip).toString(),
         },
         {
-            title: 'Мест',
+            title: 'Активностей',
             icon: '📍',
             value: places.length.toString(),
         },
@@ -55,16 +55,12 @@ export default function Overview() {
             <div className={styles.overviewRight}>
                 <div className={styles.overviewCards}>
                     {info.map((item) => (
-                        <div
-                            className={styles.overviewCardsItem}
+                        <InfoCard
                             key={item.title}
-                        >
-                            <InfoCard
-                                title={item.title}
-                                icon={item.icon}
-                                value={item.value}
-                            />
-                        </div>
+                            title={item.title}
+                            icon={item.icon}
+                            value={item.value}
+                        />
                     ))}
                 </div>
                 <div className={styles.overviewBudget}>
@@ -77,9 +73,11 @@ export default function Overview() {
                         currency={trip.currency}
                     />
                 </div>
-                <div className={styles.overviewNeedToBook}>
-                    <NeedToBookCard notBooked={notBooked} />
-                </div>
+                {notBooked.length > 0 && (
+                    <div className={styles.overviewNeedToBook}>
+                        <NeedToBookCard notBooked={notBooked} currency={trip.currency} />
+                    </div>
+                )}
             </div>
         </div>
     );

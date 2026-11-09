@@ -1,0 +1,28 @@
+.info-card {
+    background-color: var(--color-surface);
+    border-radius: var(--card-border-radius);
+    padding: 14px;
+    flex: 1;
+    text-align: start;
+}
+
+.info-card-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.info-card-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    line-height: 1.5;
+    letter-spacing: -0.96px;
+    margin: 2px 0;
+}
+
+.info-card-title {
+    font-size: 12px;
+    color: var(--color-muted);
+    line-height: 1;
+}

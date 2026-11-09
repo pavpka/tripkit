@@ -5,13 +5,13 @@ import TripTabs from './TripTabs';
 import TripHeader from './TripHeader';
 import { TripsHeader } from '@/widgets/trips-header';
 import { groupExpensesByCategory, sumExpense } from '@/entities/expense';
-import { expenses } from '@/mocks/data';
 import { getBudgetState, tripQueries } from '@/entities/trip';
 import { packingItemQueries } from '@/entities/packing-item';
 import { activityQueries } from '@/entities/activity';
 import { ApiError } from '@/shared/api';
 import type { TripDetailsContext } from '../model/types';
 import TripNotFound from './TripNotFound';
+import { expensesQueries } from '@/entities/expense';
 
 export default function TripDetailsLayout() {
     const { tripId = '' } = useParams();
@@ -19,13 +19,11 @@ export default function TripDetailsLayout() {
     const packingItemsQuery = useQuery(packingItemQueries.byTrip(tripId));
     const placesQuery = useQuery(activityQueries.byTrip(tripId));
 
-    const tripExpenses = useMemo(
-        () => expenses.filter((e) => e.tripId === tripId),
-        [tripId],
-    );
+    const expensesQuery = useQuery(expensesQueries.byTrip(tripId));
+
     const expensesByCategory = useMemo(
-        () => groupExpensesByCategory(tripExpenses),
-        [tripExpenses],
+        () => groupExpensesByCategory(expensesQuery.data ?? []),
+        [expensesQuery],
     );
 
     if (tripQuery.error instanceof ApiError && tripQuery.error.status === 404)
@@ -34,15 +32,17 @@ export default function TripDetailsLayout() {
     if (
         tripQuery.isPending ||
         packingItemsQuery.isPending ||
-        placesQuery.isPending
+        placesQuery.isPending ||
+        expensesQuery.isPending
     )
         return <div>Загрузка...</div>;
 
     const trip = tripQuery.data;
     const packingItems = packingItemsQuery.data ?? [];
     const places = placesQuery.data ?? [];
+    const expenses = expensesQuery.data ?? [];
 
-    const spent = sumExpense(tripExpenses);
+    const spent = sumExpense(expenses);
     const { status, percent, remaining } = getBudgetState(
         spent,
         trip.budgetTotal,
@@ -73,7 +73,7 @@ export default function TripDetailsLayout() {
                             trip,
                             spent,
                             places,
-                            tripExpenses,
+                            expenses,
                             expensesByCategory,
                         } satisfies TripDetailsContext
                     }

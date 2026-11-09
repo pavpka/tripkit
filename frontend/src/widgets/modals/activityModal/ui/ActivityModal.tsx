@@ -43,12 +43,12 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
     const [selectedCategory, setSelectedCategory] =
         useState<ActivityType | null>(null);
     const [dayId, setDayId] = useState(thisDay.id);
-    const [timeFrom, setTimeFrom] = useState('');
-    const [timeTo, setTimeTo] = useState('');
-    const [address, setAddress] = useState('');
-    const [link, setLink] = useState('');
-    const [cost, setCost] = useState('');
-    const [note, setNote] = useState('');
+    const [timeFrom, setTimeFrom] = useState<string | null>(null);
+    const [timeTo, setTimeTo] = useState<string | null>(null);
+    const [address, setAddress] = useState<string | null>(null);
+    const [link, setLink] = useState<string | null>(null);
+    const [cost, setCost] = useState<string | null>(null);
+    const [note, setNote] = useState<string | null>(null);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -165,21 +165,21 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
                                     <div>
                                         <label htmlFor="address">Адрес</label>
                                         <div>
-                                            <input type="text" id="address" placeholder="Улица, дом" value={address} onChange={(e) => setAddress(e.target.value)} />
+                                            <input type="text" id="address" placeholder="Улица, дом" value={address ?? ''} onChange={(e) => setAddress(e.target.value)} />
                                         </div>
                                     </div>
                                     <div>
 
                                         <label htmlFor="link">Ссылка</label>
                                         <div>
-                                            <input type="text" id="link" placeholder="https://" value={link} onChange={(e) => setLink(e.target.value)} />
+                                            <input type="text" id="link" placeholder="https://" value={link ?? ''} onChange={(e) => setLink(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="cost">Стоимость</label>
-                                <input type="number" id="cost" placeholder="0" value={cost} onChange={(e) => setCost(e.target.value)} />
+                                <input type="number" id="cost" placeholder="0" value={cost ?? ''} onChange={(e) => setCost(e.target.value)} />
 
                             </div>
                             <div>
@@ -188,7 +188,7 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
                             </div>
                             <div>
                                 <label htmlFor="note">Заметка</label>
-                                <textarea id="note" placeholder="Что взять, часы работы, код брони" value={note} onChange={(e) => setNote(e.target.value)} />
+                                <textarea id="note" placeholder="Что взять, часы работы, код брони" value={note ?? ''} onChange={(e) => setNote(e.target.value)} />
                             </div>
                         </div>
 

@@ -14,7 +14,7 @@ export interface Expense {
     category: ExpenseCategory;
 
     // best practice: хранить в "центах/копейках"
-    amountMinor: number;
+    amount: number;
 
     currency: CurrencyCode;
     date: string; // 'YYYY-MM-DD'
@@ -22,3 +22,5 @@ export interface Expense {
     title: string;
     linkedActivityId?: ActivityId | null;
 }
+
+export type ExpenseInput = Omit<Expense, 'id' | 'tripId'>;

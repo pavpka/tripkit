@@ -32,14 +32,16 @@ type DateParts = {
     day: string;
     month: string;
     year: string;
+    dayMonth: string;
 };
 
-const getDateParts = (date: Date): DateParts => ({
+const getDateParts = (date: Date, monthFormat: 'long' | 'short' = 'short'): DateParts => ({
     day: date.toLocaleDateString(DATE_LOCALE, { day: 'numeric' }),
     month: date
-        .toLocaleDateString(DATE_LOCALE, { month: 'short' })
+        .toLocaleDateString(DATE_LOCALE, { month: monthFormat })
         .replace('.', ''),
     year: date.toLocaleDateString(DATE_LOCALE, { year: 'numeric' }),
+    dayMonth: date.toLocaleDateString(DATE_LOCALE, { day: 'numeric', month: monthFormat }).replace('.', ''),
 });
 
 const formatFullDate = ({ day, month, year }: DateParts): string =>
@@ -48,19 +50,20 @@ const formatFullDate = ({ day, month, year }: DateParts): string =>
 export const formatDateRange = (
     from: string | null,
     to: string | null,
+    monthFormat: 'long' | 'short' = 'short',
 ): string => {
-    const fromParts = from ? getDateParts(parseLocalDate(from)) : null;
-    const toParts = to ? getDateParts(parseLocalDate(to)) : null;
+    const fromParts = from ? getDateParts(parseLocalDate(from), monthFormat) : null;
+    const toParts = to ? getDateParts(parseLocalDate(to), monthFormat) : null;
 
     if (fromParts && toParts) {
         const sameMonth =
             fromParts.month === toParts.month && fromParts.year === toParts.year;
         if (sameMonth) {
-            return `${fromParts.day} – ${toParts.day} ${fromParts.month} ${fromParts.year}`;
+            return `${fromParts.day} – ${toParts.dayMonth} ${fromParts.year}`;
         }
 
         if (fromParts.year === toParts.year) {
-            return `${fromParts.day} ${fromParts.month} – ${toParts.day} ${toParts.month} ${fromParts.year}`;
+            return `${fromParts.dayMonth} – ${toParts.dayMonth} ${fromParts.year}`;
         }
 
         return `${formatFullDate(fromParts)} – ${formatFullDate(toParts)}`;
