@@ -1,6 +1,5 @@
 .trip-header {
     color: var(--color-text);
-    font-family: 'Unbounded, sans-serif';
     display: flex;
     gap: 18px;
     justify-content: space-between;
@@ -20,6 +19,58 @@
 .trip-header-left {
     display: flex;
     gap: 18px;
+    text-align: start;
+    color: var(--color-muted);
+    font-size: 13px;
+
+    .trip-header-back-link {
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+
+        .chevron-left-icon {
+            width: 15px;
+            height: 15px;
+            vertical-align: sub;
+            margin-right: 2px;
+            filter: brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(543%) hue-rotate(349deg) brightness(91%) contrast(89%);
+        }
+    }
+
+    .trip-title {
+        font-family: var(--font-display);
+        color: var(--color-ink);
+        margin-bottom: 4px;
+        font-size: 30px;
+        line-height: 1.15;
+    }
+
+    .trip-header-info {
+        display: flex;
+        justify-content: flex-start;
+        gap: 12px;
+        align-items: center;
+
+        .trip-item-status-badge {
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+            gap: 6px;
+        }
+
+        .trip-item-status-badge-dot {
+            width: 6px;
+            height: 5.5px;
+            border-radius: 50%;
+
+        }
+
+        .trip-item-status-badge-label {}
+    }
 }
 
 .btn-text {
