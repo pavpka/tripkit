@@ -1,6 +1,8 @@
 import { ProgressBar } from '@/shared/ui/ProgressBar';
 import styles from './BudgetSummary.module.scss';
-import { BUDGET_STATUS_COLORS, type BudgetStatus } from '../model';
+import { BUDGET_STATUS_COLORS, type BudgetStatus } from '../../trip/model';
+import { getCurrencySymbol } from '@/shared/lib/money';
+import type { CurrencyCode } from '@/shared/types';
 
 interface BudgetSummaryProps {
     spent: number;
@@ -8,7 +10,7 @@ interface BudgetSummaryProps {
     remaining: number;
     percent: number;
     status: BudgetStatus;
-    currency: string;
+    currency: CurrencyCode;
 }
 
 const STATUS_LABELS: Record<BudgetStatus, string> = {
@@ -34,12 +36,12 @@ export function BudgetSummary({
                     <div>Потрачено</div>
                     <div>
                         <span className={styles.budgetSummarySpentValueAmount}>
-                            {spent} {currency}
+                            {spent} {getCurrencySymbol(currency)}
                         </span>
-                        <span>
+                        <span className={styles.budgetSummaryTotalValueAmount}>
                             {isUnset
                                 ? ' — бюджет не задан'
-                                : ` из ${budgetTotal} ${currency}`}
+                                : ` из ${budgetTotal} ${getCurrencySymbol(currency)}`}
                         </span>
                     </div>
                 </div>
@@ -72,19 +74,19 @@ export function BudgetSummary({
                     >
                         {isUnset
                             ? '—'
-                            : `${status === 'over' ? -remaining : remaining} ${currency}`}
+                            : `${status === 'over' ? -remaining : remaining} ${getCurrencySymbol(currency)}`}
                     </div>
                 </div>
                 <div>
                     На человека
                     <div className={styles.budgetSummaryDetailsValue}>
-                        {isUnset ? '—' : `${remaining}/2 ${currency}`}
+                        {isUnset ? '—' : `${remaining}/2 ${getCurrencySymbol(currency)}`}
                     </div>
                 </div>
                 <div>
                     Еще не оплачено по броням
                     <div className={styles.budgetSummaryDetailsValue}>
-                        X {currency}
+                        X {getCurrencySymbol(currency)}
                     </div>
                 </div>
             </div>

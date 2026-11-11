@@ -6,6 +6,19 @@
     box-shadow: var(--shadow);
     box-sizing: border-box;
 }
+
+.category-filter-title {
+    margin-bottom: 14px;
+    text-align: start;
+}
+.category-filter-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    td {
+        padding-top: 14px;
+    }
+}
 .category-icon {
     width: 34px;
     height: 34px;
@@ -14,8 +27,33 @@
     align-items: center;
     justify-content: center;
 }
+
 .category-icon-image {
     width: 20px;
     height: 20px;
     object-fit: contain;
+}
+
+.category-label {
+    text-align: start;
+    font-weight: 700;
+    font-size: 13.5px;
+    line-height: 1.5;
+    width: 150px;
+}
+
+.category-percentage {
+    text-align: start;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-muted)
+}
+
+.category-amount {
+    width: 74px;
+    text-align: end;
+    font-weight: 500;
+    font-size: 13.5px;
+    font-weight: 700;
 }

@@ -6,7 +6,7 @@
         text-align: start;
 
         &.expense-row-date {
-            font-size: 14px;
+            font-size: 12px;
             color: #7e756c;
             width: 6%;
         }
@@ -19,8 +19,14 @@
             width: 65%;
 
             .expense-row-title-text {
-                font-size: 14px;
+                font-size: 13.5px;
                 padding: 12px 0;
+                line-height: 1.5;
+            }
+
+            .expense-row-title-desc {
+                font-size: 12px;
+                color: var(--color-muted);
             }
         }
 
@@ -28,6 +34,7 @@
             width: 15%;
             text-align: end;
             font-size: 14px;
+            font-weight: 700;
         }
 
         &.expense-row-more .expense-row-more-icon {

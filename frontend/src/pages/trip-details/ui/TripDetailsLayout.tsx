@@ -22,8 +22,8 @@ export default function TripDetailsLayout() {
     const expensesQuery = useQuery(expensesQueries.byTrip(tripId));
 
     const expensesByCategory = useMemo(
-        () => groupExpensesByCategory(expensesQuery.data ?? []),
-        [expensesQuery],
+        () => groupExpensesByCategory(expensesQuery.data ?? [], tripQuery.data?.currency ?? 'RUB'),
+        [expensesQuery.data, tripQuery.data?.currency],
     );
 
     if (tripQuery.error instanceof ApiError && tripQuery.error.status === 404)
@@ -41,6 +41,8 @@ export default function TripDetailsLayout() {
     const packingItems = packingItemsQuery.data ?? [];
     const places = placesQuery.data ?? [];
     const expenses = expensesQuery.data ?? [];
+
+
 
     const spent = sumExpense(expenses);
     const { status, percent, remaining } = getBudgetState(

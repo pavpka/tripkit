@@ -74,12 +74,12 @@ export const formatDateRange = (
     return 'Даты не выбраны';
 };
 
-export const formatDayDate = (date: string): string => {
+export const formatDayDate = (date: string, includeWeekday: boolean = true): string => {
     const parsed = parseLocalDate(date);
     const weekday = parsed.toLocaleDateString(DATE_LOCALE, { weekday: 'short' });
     const day = parsed.toLocaleDateString(DATE_LOCALE, { day: '2-digit' });
     const month = parsed
         .toLocaleDateString(DATE_LOCALE, { month: 'short' })
         .replace('.', '');
-    return `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)}, ${day} ${month}`;
+    return `${includeWeekday ? `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)}, ` : ''}${day} ${month}`;
 };

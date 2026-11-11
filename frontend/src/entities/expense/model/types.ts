@@ -19,8 +19,8 @@ export interface Expense {
     currency: CurrencyCode;
     date: string; // 'YYYY-MM-DD'
 
-    title: string;
-    linkedActivityId?: ActivityId | null;
+    activityId?: ActivityId | null;
+    description: string | null;
 }
 
 export type ExpenseInput = Omit<Expense, 'id' | 'tripId'>;

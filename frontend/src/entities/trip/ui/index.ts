@@ -1,1 +1,1 @@
-export * from './BudgetSummary';
+export * from '../../expense/ui/BudgetSummary';

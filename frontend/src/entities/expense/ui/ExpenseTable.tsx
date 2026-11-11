@@ -52,8 +52,8 @@ export function ExpenseTable({ expenses, activityTitles }: ExpenseTableProps) {
                             key={expense.id}
                             expense={expense}
                             activityTitle={
-                                expense.linkedActivityId
-                                    ? activityTitles[expense.linkedActivityId]
+                                expense.activityId
+                                    ? activityTitles[expense.activityId]
                                     : undefined
                             }
                         />

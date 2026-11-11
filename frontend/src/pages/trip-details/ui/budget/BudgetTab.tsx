@@ -11,7 +11,7 @@ export default function BudgetTab() {
         trip,
         spent,
         remaining,
-        tripExpenses,
+        expenses,
         places,
         expensesByCategory,
     } = useOutletContext<TripDetailsContext>();
@@ -45,7 +45,7 @@ export default function BudgetTab() {
                 />
 
                 <ExpenseTable
-                    expenses={tripExpenses}
+                    expenses={expenses}
                     activityTitles={activityTitles}
                 />
             </div>

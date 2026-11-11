@@ -5,6 +5,7 @@
     margin-bottom: 20px;
     border-radius: 24px;
 }
+
 .budget-summary-spent {
     display: flex;
     flex-direction: row;
@@ -14,11 +15,13 @@
     line-height: 1.5;
     color: #7e756c;
     margin-bottom: 16px;
+
     .budget-summary-spent-value {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
+
         .budget-summary-spent-value-amount {
             font-size: 40px;
             font-family: var(--font-display);
@@ -27,12 +30,18 @@
             color: #1a1a1a;
             margin-right: 10px;
         }
+
+        .budget-summary-total-value-amount {
+            font-weight: 500;
+        }
     }
+
     .budget-summary-spent-percent {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-end;
+
         .budget-summary-spent-percent-value {
             font-size: 30px;
             font-family: var(--font-display);
@@ -57,9 +66,11 @@
     line-height: 1.5;
     color: #7e756c;
     text-align: start;
+
     .budget-summary-details-value {
         font-size: 15px;
         line-height: 1.5;
         color: var(--color-text);
+        font-weight: 500;
     }
 }
