@@ -54,7 +54,7 @@ export const expenses = pgTable("expenses", {
 	amount: integer().notNull(),
 	currency: text().notNull(),
 	date: date().notNull(),
-	note: text(),
+	description: text(),
 }, (table) => [
 	foreignKey({
 		columns: [table.activityId, table.tripId],

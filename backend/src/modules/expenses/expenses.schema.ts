@@ -7,7 +7,7 @@ export const createExpenseSchema = z.object({
     amount: z.number().min(0),
     currency: z.enum(currency.enumValues),
     date: z.iso.date(),
-    note: z.string().nullable().default(null)
+    description: z.string().nullable().default(null)
 });
 
 export type CreateExpenseBody = z.infer<typeof createExpenseSchema>;

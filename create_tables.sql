@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS EXPENSES (
 	amount INT NOT NULL CHECK (amount > 0),
 	currency TEXT NOT NULL CHECK (currency IN ('RUB', 'USD', 'EUR')),
 	date DATE NOT NULL,
-	note TEXT,
+	description TEXT,
 	FOREIGN KEY (activity_id, trip_id) REFERENCES activities (id, trip_id) ON DELETE SET NULL (activity_id)
 );
 
