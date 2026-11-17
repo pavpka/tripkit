@@ -3,7 +3,7 @@ import styles from './ActivityModal.module.scss';
 import ReactDOM from 'react-dom';
 import { Button } from '@/shared/ui/Button';
 import { ChoiceChips } from '@/shared/ui/ChoiceChips';
-import { ACTIVITY_CATEGORY_DETAILS, type ActivityType } from '@/entities/activity';
+import { ACTIVITY_CATEGORY_DETAILS, BOOKED_STATUSES, useCreateActivity, type ActivityType } from '@/entities/activity';
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { dayQueries, type Day } from '@/entities/day';
@@ -12,15 +12,8 @@ import { SegmentControl } from '@/shared/ui/SegmentControl';
 import { tripQueries } from '@/entities/trip';
 import { DropDown } from '@/shared/ui/DropDown';
 import { TimeRangeInput } from '@/shared/ui/TimeRangeInput';
-import { useCreateActivity } from '@/entities/activity/api/activityMutations';
 
-const bookedStatusOptions = [
-    { value: null, label: 'Не нужна' },
-    { value: 'todo', label: 'Нужно забронировать' },
-    { value: 'booked', label: 'Забронировано' }
-];
-
-export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void, thisDay: Day, order: number }) {
+export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void, thisDay: Day | null, order: number }) {
     const { tripId = '' } = useParams();
     const createActivity = useCreateActivity(tripId);
     
@@ -42,7 +35,7 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
     const [name, setName] = useState('');
     const [selectedCategory, setSelectedCategory] =
         useState<ActivityType | null>(null);
-    const [dayId, setDayId] = useState(thisDay.id);
+    const [dayId, setDayId] = useState(thisDay?.id ?? 'other');
     const [timeFrom, setTimeFrom] = useState<string | null>(null);
     const [timeTo, setTimeTo] = useState<string | null>(null);
     const [address, setAddress] = useState<string | null>(null);
@@ -77,7 +70,7 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
         createActivity.mutate({
             title: name,
             type: selectedCategory,
-            dayId,
+            dayId: dayId === 'other' ? null : dayId,
             startTime: timeFrom,
             endTime: timeTo,
             address,
@@ -106,7 +99,7 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
                                 <div>
                                     Новая активность
                                     <div className={styles.modalHeaderTitleSubtitle}>
-                                        {trip?.title} • {formatDayDate(thisDay.date)}
+                                        {trip?.title} • {thisDay ? formatDayDate(thisDay.date) : 'Без дня'}
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +177,7 @@ export function ActivityModal({ onClose, thisDay, order }: { onClose: () => void
                             </div>
                             <div>
                                 Бронь
-                                <SegmentControl options={bookedStatusOptions} value={bookedStatus} onChange={(value) => setBookedStatus(value as 'todo' | 'booked' | null)} />
+                                <SegmentControl options={BOOKED_STATUSES} value={bookedStatus} onChange={(value) => setBookedStatus(value as 'todo' | 'booked' | null)} />
                             </div>
                             <div>
                                 <label htmlFor="note">Заметка</label>

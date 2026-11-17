@@ -1,37 +1,29 @@
-import { useQuery } from '@tanstack/react-query';
-import type { TripId } from '@/shared/types';
 import type { Activity } from '@/entities/activity';
-import { dayQueries } from '@/entities/day';
+import { type Day } from '@/entities/day';
 import { Itinerary } from './Itinerary';
+import styles from './DayList.module.scss';
 
 export function DayList({
-    tripId,
+    days,
     activities,
+    openModal,
 }: {
-    tripId: TripId;
+    days: Day[];
     activities: Activity[];
+    openModal: (day: Day) => void;
 }) {
-    const {
-        data: days,
-        isPending,
-        isError,
-    } = useQuery(dayQueries.byTrip(tripId));
-
-    if (isPending) return <div>Загрузка...</div>;
-    if (isError) return <div>Не удалось загрузить дни</div>;
 
     return (
-        <div className="day-list">
+        <div className={styles.dayList}>
             {days.map((day, index) => (
-                <div className="day-card" key={day.id}>
-                    <Itinerary
-                        day={day}
-                        index={index}
-                        activities={activities.filter(
-                            (activity) => activity.dayId === day.id,
-                        )}
-                    />
-                </div>
+                <Itinerary key={day.id}
+                    openModal={() => openModal(day)}
+                    day={day}
+                    index={index}
+                    activities={activities.filter(
+                        (activity) => activity.dayId === day.id,
+                    )}
+                />
             ))}
         </div>
     );

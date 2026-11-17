@@ -9,7 +9,7 @@ export const ACTIVITY_CATEGORY_DETAILS: Record<ActivityType, CategoryDetails> = 
     other: { label: 'Другое', icon: '/icons/activities/other.png', bgColor: '#ECECEF' },
 };
 
-export const ACTIVITY_ICONS: Record<ActivityType, string> = {
+const ACTIVITY_ICONS: Record<ActivityType, string> = {
     sight: 'museum.png',
     food: 'food.png',
     transport: 'plane.png',
@@ -17,6 +17,15 @@ export const ACTIVITY_ICONS: Record<ActivityType, string> = {
     shopping: 'shopping.png',
     other: 'other.png',
 };
+
+export const BOOKED_STATUSES = [
+    { value: null, label: 'Не нужна' },
+    { value: 'todo', label: 'Нужно забронировать' },
+    { value: 'booked', label: 'Забронировано' }
+];
+
+export const getBookedStatusLabel = (bookedStatus: string | null): string =>
+    BOOKED_STATUSES.find(status => status.value === bookedStatus)?.label ?? 'Неизвестно';
 
 export const getActivityIcon = (type: string): string =>
     (ACTIVITY_ICONS as Record<string, string>)[type] ?? ACTIVITY_ICONS.other;

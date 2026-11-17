@@ -1,0 +1,57 @@
+.day-card {
+    margin-bottom: 20px;
+}
+
+.day-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    h3 {
+        font-family: var(--font-display);
+        font-size: 18px;
+    }
+}
+
+.day-card-header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .day-card-header-title-separator {
+        color: var(--color-muted);
+        margin: 0 10px;
+    }
+}
+
+.day-card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    button {
+        color: var(--color-accent-deep);
+        background-color: var(--color-accent-soft);
+        box-shadow: none;
+    }
+}
+
+.day-card-index {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: var(--color-accent);
+    display: flex;
+    justify-content: center;
+    color: var(--color-accent-deep);
+    border: 1px solid var(--color-accent-line);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    align-items: center;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 700;
+}
