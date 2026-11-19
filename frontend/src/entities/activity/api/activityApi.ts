@@ -9,4 +9,6 @@ export const activityApi = {
         apiClient.get<Activity[]>(basePath(tripId), options),
     create: (tripId: TripId, activity: ActivityInput) =>
         apiClient.post<string>(basePath(tripId), activity),
+    update: (tripId: TripId, activityId: string, activity: ActivityInput) =>
+        apiClient.put<string>(`${basePath(tripId)}/${activityId}`, activity),
 };

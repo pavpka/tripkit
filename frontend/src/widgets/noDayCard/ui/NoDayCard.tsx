@@ -1,6 +1,8 @@
-import { getActivityBgColor, getActivityIcon, type Activity } from '@/entities/activity';
+import { type Activity } from '@/entities/activity';
 import { Button } from '@/shared/ui/Button';
 import styles from './NoDayCard.module.scss';
+import { DraggableActivity } from '@/features/activity-dnd';
+import { NoDayCardActivity } from './NoDayCardActivity';
 
 export function NoDayCard({ activities, openModal }: { activities: Activity[], openModal: () => void }) {
 
@@ -12,16 +14,9 @@ export function NoDayCard({ activities, openModal }: { activities: Activity[], o
                 <Button variant="primary" type='button' onClick={openModal}>+ Активность</Button>
             </div>
             {noDay.map((activity) => (
-                <div className={styles.noDayCardActivity} key={activity.id}>
-                    <div className={styles.noDayCardActivityIcon}
-                        style={{ backgroundColor: getActivityBgColor(activity.type) }}>
-                        <img
-                            src={`/icons/activities/${getActivityIcon(activity.type)}`}
-                            alt={activity.type}
-                        />
-                    </div>
-                    <h4>{activity.title}</h4>
-                </div>
+                <DraggableActivity activity={activity} key={activity.id}>
+                    <NoDayCardActivity activity={activity} />
+                </DraggableActivity>
             ))}
             <p className={styles.noDayCardNote}>Перетащи в нужный день</p>
         </div>

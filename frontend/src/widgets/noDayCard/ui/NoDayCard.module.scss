@@ -2,16 +2,20 @@
     background-color: #fff;
     border-radius: 24px;
     box-shadow: var(--shadow);
-    padding: 20px;
+    padding: 6px;
     text-align: start;
     margin-bottom: 20px;
+
+    >[aria-pressed] {
+        opacity: 0.4;
+    }
 }
 
 .no-day-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+    padding: 14px 14px 0;
 
     h3 {
         font-size: 15px;
@@ -27,9 +31,12 @@
 .no-day-card-activity {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
     font-size: 13px;
-    margin-bottom: 14px;
+    padding: 14px;
+    background-color: #fff;
+    border-radius: 24px;
 
     .no-day-card-activity-icon {
         width: 34px;
@@ -45,8 +52,20 @@
     }
 }
 
+.no-day-card-activity-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .no-day-card-note {
     font-size: 12px;
     color: var(--color-muted);
     margin: 0;
+    padding: 0 14px 14px;
+}
+
+.no-day-card-activity-grip {
+    width: 16px;
+    height: 16px;
 }

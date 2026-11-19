@@ -1,5 +1,5 @@
 import { DayList } from '@/widgets/dayList';
-import { NoDayCard } from '@/widgets/noDayCard';
+import { NoDayCard, NoDayCardActivity } from '@/widgets/noDayCard';
 import { useOutletContext } from 'react-router';
 import type { TripDetailsContext } from '../../model/types';
 import { ActivityModal } from '@/widgets/modals/activityModal';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { dayQueries, type Day } from '@/entities/day';
 import styles from './ItineraryTab.module.scss';
-import { DndContext, type DragEndEvent } from '@dnd-kit/core';
+import { AssignActivityDndProvider } from '@/features/activity-dnd';
 import { SummaryCard } from '@/widgets/summary-card';
 
 export default function ItineraryTab() {
@@ -38,18 +38,16 @@ export default function ItineraryTab() {
         }
     });
     const newOrder = maxOrder + 1;
-    const handleDragEnd = (event: DragEndEvent) => {
-        console.log(event);
-    };
+
     return (
         <div className={styles.itineraryTab}>
-            <DndContext onDragEnd={handleDragEnd}>
+            <AssignActivityDndProvider tripId={trip.id} renderDragOverlay={(activity) => <NoDayCardActivity activity={activity} withGrip={false} />}>
                 <DayList days={days} activities={places} openModal={openModal} />
                 <div className={styles.itineraryTabRight}>
                     <NoDayCard activities={places} openModal={() => openModal(null)} />
                     <SummaryCard />
                 </div>
-            </DndContext>
+            </AssignActivityDndProvider>
             {modalIsOpen && (
                 <ActivityModal onClose={closeModal} thisDay={selectedDay} order={newOrder} />
             )}
