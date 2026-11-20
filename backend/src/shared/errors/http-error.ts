@@ -9,3 +9,6 @@ export class HttpError extends Error {
         this.details = details;
     }
 }
+
+export class ConflictError extends HttpError { constructor(m: string) { super(409, m); } }
+export class UnauthorizedError extends HttpError { constructor(m: string) { super(401, m); } }

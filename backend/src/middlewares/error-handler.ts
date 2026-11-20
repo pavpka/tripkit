@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../shared/errors/http-error.js';
+import { ZodError } from 'zod';
 
 function hasStatus(err: unknown): err is { status: number } {
     if (typeof err !== 'object' || err === null) return false;
@@ -10,13 +11,15 @@ function hasStatus(err: unknown): err is { status: number } {
 export function errorHandler(err: unknown, _req: Request, res: Response, _next: NextFunction) {
     console.error(err);
 
+    if (err instanceof ZodError) return res.status(400).json({ message: 'Validation error', issues: err.issues });
+
     if (err instanceof HttpError) {
         res.status(err.status).json({ message: err.message, errors: err.details });
         return;
     }
-    
+
 
     const status = hasStatus(err) ? err.status : 500;
-    const message =  status < 500 ? 'Bad Request' : 'Internal Server Error';
+    const message = status < 500 ? 'Bad Request' : 'Internal Server Error';
     res.status(status).json({ message });
 }

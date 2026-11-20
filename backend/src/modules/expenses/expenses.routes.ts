@@ -9,7 +9,6 @@ const controller = new ExpensesController(new ExpensesService(new PostgresExpens
 export const expensesRouter = Router({ mergeParams: true });
 
 expensesRouter.get('/', controller.getAll);
-expensesRouter.get('/:activityId', controller.getAllByActivityId);
 expensesRouter.post('/', validateBody(createExpenseSchema), controller.create);
 expensesRouter.delete('/:id', controller.delete);
 expensesRouter.put('/:id', validateBody(createExpenseSchema), controller.update);

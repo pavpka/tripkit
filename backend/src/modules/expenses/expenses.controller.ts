@@ -1,17 +1,18 @@
 import type { ExpensesService } from "./expenses.service.js";
 import type { Request, Response } from "express";
-import type { CreateExpenseBody } from "./expenses.schema.js";
+import { expensesQuerySchema, type CreateExpenseBody } from "./expenses.schema.js";
 import type { UpdateExpenseDto } from "./expenses.types.js";
 
 export class ExpensesController {
     constructor(private readonly service: ExpensesService) { }
 
     getAll = async (req: Request<{ tripId: string }>, res: Response) => {
-        const expenses = await this.service.getAll(req.params.tripId);
-        res.json(expenses);
-    }
-    getAllByActivityId = async (req: Request<{ activityId: string }>, res: Response) => {
-        const expenses = await this.service.getAllByActivityId(req.params.activityId);
+        const { activityId } = expensesQuerySchema.parse(req.query);
+        const { tripId } = req.params;
+
+        const expenses = activityId
+            ? await this.service.getAllByActivityId(activityId, tripId)
+            : await this.service.getAll(tripId);
         res.json(expenses);
     }
     create = async (req: Request<{ tripId: string }, {}, CreateExpenseBody>, res: Response) => {

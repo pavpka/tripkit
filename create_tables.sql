@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS TRIPS (
 	color TEXT NOT NULL,
 	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	owner_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE
 
 	CONSTRAINT check_trip_dates CHECK (
 		(status = 'idea')
@@ -20,6 +21,8 @@ CREATE TABLE IF NOT EXISTS TRIPS (
 		(status <> 'idea' AND start_date IS NOT NULL AND end_date IS NOT NULL)
 	)
 );
+
+CREATE INDEX IF NOT EXISTS idx_trips_owner_id ON trips(owner_id);
 
 CREATE OR REPLACE FUNCTION set_updated_at() RETURNS trigger AS $$
 BEGIN
@@ -119,3 +122,24 @@ CREATE OR REPLACE TRIGGER trg_validate_expense_date
 BEFORE INSERT OR UPDATE ON expenses
 FOR EACH ROW
 EXECUTE FUNCTION check_day_date();
+
+
+CREATE TABLE IF NOT EXISTS USERS (
+	id uuid PRIMARY KEY DEFAULT uuidv7(),
+	email text NOT NULL,
+	password_hash text NOT NULL,
+	name text,
+	created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON USERS (lower(email));
+
+CREATE TABLE IF NOT EXISTS SESSIONS (
+	id text PRIMARY KEY,
+	user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	expires_at timestamptz NOT NULL,
+	created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON SESSIONS (user_id);

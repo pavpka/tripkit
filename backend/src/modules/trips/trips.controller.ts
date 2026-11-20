@@ -1,27 +1,28 @@
 import type { Request, Response } from 'express';
 import type { TripsService } from './trips.service.js';
-import type { CreateTripDto } from './trips.types.js';
+import type { CreateTripInput } from './trips.types.js';
 
 export class TripsController {
     constructor(private readonly service: TripsService) { }
-    getAll = async (_req: Request, res: Response) => {
-        const trips = await this.service.getAll();
+
+    getAll = async (req: Request, res: Response) => {
+        const trips = await this.service.getAll(req.user!.id);
         res.json(trips);
     };
     getById = async (req: Request<{ id: string }>, res: Response) => {
-        const trip = await this.service.getById(req.params.id);
+        const trip = await this.service.getById(req.params.id, req.user!.id);
         res.json(trip);
     };
-    create = async (req: Request<{}, {}, CreateTripDto>, res: Response) => {
-        const trip = await this.service.create(req.body);
+    create = async (req: Request<{}, unknown, CreateTripInput>, res: Response) => {
+        const trip = await this.service.create(req.body, req.user!.id);
         res.status(201).json('Trip created! Trip ID: ' + trip.id);
     };
     delete = async (req: Request<{ id: string }>, res: Response) => {
-        await this.service.delete(req.params.id);
+        await this.service.delete(req.params.id, req.user!.id);
         res.status(204).end();
     };
-    update = async (req: Request<{ id: string }>, res: Response) => {
-        await this.service.update(req.params.id, req.body);
+    update = async (req: Request<{ id: string }, unknown, CreateTripInput>, res: Response) => {
+        await this.service.update(req.params.id, req.body, req.user!.id);
         res.status(200).json('Trip updated!');
     };
 }

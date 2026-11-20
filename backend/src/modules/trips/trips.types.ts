@@ -16,6 +16,8 @@ export interface Trip {
     color: string;
     createdAt: Date;
     updatedAt: Date;
+    ownerId: string;
 }
 
-export type CreateTripDto = Omit<Trip, 'id' | 'createdAt' | 'updatedAt'>;
+
+export type CreateTripInput = Omit<Trip, 'id' | 'createdAt' | 'updatedAt' | 'ownerId'>;

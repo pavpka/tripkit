@@ -7,8 +7,8 @@ export class ExpensesService {
     async getAll(tripId: string): Promise<Expense[]> {
         return this.repo.getAll(tripId);
     }
-    async getAllByActivityId(activityId: string): Promise<Expense[]> {
-        return this.repo.getAllByActivityId(activityId);
+    async getAllByActivityId(activityId: string, tripId: string): Promise<Expense[]> {
+        return this.repo.getAllByActivityId(activityId, tripId);
     }
     async create(expense: CreateExpenseDto): Promise<Expense> {
         return this.repo.create(expense);

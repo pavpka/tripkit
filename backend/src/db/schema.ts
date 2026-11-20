@@ -1,4 +1,4 @@
-import { pgTable, pgEnum, uuid, text, date, integer, boolean, time, smallint, timestamp, foreignKey, primaryKey, unique, check } from "drizzle-orm/pg-core"
+import { pgTable, pgEnum, uuid, text, timestamp, date, integer, boolean, time, smallint, index, uniqueIndex, foreignKey, primaryKey, unique, check } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
 export const tripStatus = pgEnum("trip_status", ["idea", "planning", "booked", "ongoing", "done", "cancelled"])
@@ -31,7 +31,7 @@ export const activities = pgTable("activities", {
 		foreignColumns: [trips.id],
 		name: "activities_trip_id_fkey"
 	}).onDelete("cascade"),
-	unique("activities_id_trip_id_key").on(table.id, table.tripId),check("activities_booking_status_check", sql`(booking_status = ANY (ARRAY['todo'::text, 'booked'::text]))`),check("activities_check", sql`(start_time <= end_time)`),check("activities_cost_estimate_check", sql`(cost_estimate >= 0)`),check("activities_order_check", sql`("order" >= 0)`),check("activities_type_check", sql`(type = ANY (ARRAY['sight'::text, 'food'::text, 'transport'::text, 'hotel'::text, 'shopping'::text, 'other'::text]))`),]);
+	unique("activities_id_trip_id_key").on(table.id, table.tripId), check("activities_booking_status_check", sql`(booking_status = ANY (ARRAY['todo'::text, 'booked'::text]))`), check("activities_check", sql`(start_time <= end_time)`), check("activities_cost_estimate_check", sql`(cost_estimate >= 0)`), check("activities_order_check", sql`("order" >= 0)`), check("activities_type_check", sql`(type = ANY (ARRAY['sight'::text, 'food'::text, 'transport'::text, 'hotel'::text, 'shopping'::text, 'other'::text]))`),]);
 
 export const days = pgTable("days", {
 	id: uuid().default(sql`uuidv7()`).primaryKey(),
@@ -44,7 +44,7 @@ export const days = pgTable("days", {
 		foreignColumns: [trips.id],
 		name: "days_trip_id_fkey"
 	}).onDelete("cascade"),
-	unique("days_id_trip_id_key").on(table.id, table.tripId),	unique("days_trip_id_date_key").on(table.tripId, table.date),]);
+	unique("days_id_trip_id_key").on(table.id, table.tripId), unique("days_trip_id_date_key").on(table.tripId, table.date),]);
 
 export const expenses = pgTable("expenses", {
 	id: uuid().default(sql`uuidv7()`).primaryKey(),
@@ -66,7 +66,7 @@ export const expenses = pgTable("expenses", {
 		foreignColumns: [trips.id],
 		name: "expenses_trip_id_fkey"
 	}).onDelete("cascade"),
-check("expenses_amount_check", sql`(amount > 0)`),check("expenses_category_check", sql`(category = ANY (ARRAY['transport'::text, 'hotel'::text, 'food'::text, 'tickets'::text, 'shopping'::text, 'other'::text]))`),check("expenses_currency_check", sql`(currency = ANY (ARRAY['RUB'::text, 'USD'::text, 'EUR'::text]))`),]);
+	check("expenses_amount_check", sql`(amount > 0)`), check("expenses_category_check", sql`(category = ANY (ARRAY['transport'::text, 'hotel'::text, 'food'::text, 'tickets'::text, 'shopping'::text, 'other'::text]))`), check("expenses_currency_check", sql`(currency = ANY (ARRAY['RUB'::text, 'USD'::text, 'EUR'::text]))`),]);
 
 export const packingItems = pgTable("packing_items", {
 	id: uuid().default(sql`uuidv7()`).primaryKey(),
@@ -81,7 +81,7 @@ export const packingItems = pgTable("packing_items", {
 		foreignColumns: [trips.id],
 		name: "packing_items_trip_id_fkey"
 	}).onDelete("cascade"),
-check("packing_items_category_check", sql`(category = ANY (ARRAY['clothes'::text, 'docs'::text, 'tech'::text, 'hygiene'::text, 'other'::text]))`),check("packing_items_qty_check", sql`(qty > 0)`),]);
+	check("packing_items_category_check", sql`(category = ANY (ARRAY['clothes'::text, 'docs'::text, 'tech'::text, 'hygiene'::text, 'other'::text]))`), check("packing_items_qty_check", sql`(qty > 0)`),]);
 
 export const trips = pgTable("trips", {
 	id: uuid().default(sql`uuidv7()`).primaryKey(),
@@ -98,5 +98,39 @@ export const trips = pgTable("trips", {
 	color: text().notNull(),
 	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+	ownerId: uuid("owner_id").notNull(),
 }, (table) => [
-check("check_trip_dates", sql`((status = 'idea'::trip_status) OR ((status <> 'idea'::trip_status) AND (start_date IS NOT NULL) AND (end_date IS NOT NULL)))`),check("trips_budget_check", sql`(budget >= 0)`),check("trips_check", sql`(start_date <= end_date)`),check("trips_travellers_count_check", sql`(travellers_count > 0)`),]);
+	foreignKey({
+		columns: [table.ownerId],
+		foreignColumns: [users.id],
+		name: "trips_owner_id_fkey"
+	}).onDelete("cascade"),
+	index("idx_trips_owner_id").using("btree", table.ownerId.asc().nullsLast()),
+	check("check_trip_dates", sql`((status = 'idea'::trip_status) OR ((status <> 'idea'::trip_status) AND (start_date IS NOT NULL) AND (end_date IS NOT NULL)))`), check("trips_budget_check", sql`(budget >= 0)`), check("trips_check", sql`(start_date <= end_date)`), check("trips_travellers_count_check", sql`(travellers_count > 0)`),]);
+
+
+export const sessions = pgTable("sessions", {
+	id: text().primaryKey(),
+	userId: uuid("user_id").notNull(),
+	expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+}, (table) => [
+	foreignKey({
+		columns: [table.userId],
+		foreignColumns: [users.id],
+		name: "sessions_user_id_fkey"
+	}).onDelete("cascade"),
+	index("idx_sessions_user_id").using("btree", table.userId.asc().nullsLast()),
+]);
+
+export const users = pgTable("users", {
+	id: uuid().default(sql`uuidv7()`).primaryKey(),
+	email: text().notNull(),
+	passwordHash: text("password_hash").notNull(),
+	name: text(),
+	createdAt: timestamp("created_at", { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+}, (table) => [
+	uniqueIndex("idx_users_email").using("btree", sql`lower(email)`),
+]);
+

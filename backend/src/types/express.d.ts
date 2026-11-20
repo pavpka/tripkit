@@ -1,0 +1,12 @@
+import type { User } from '../modules/auth/auth.types.js';
+
+declare global {
+    namespace Express {
+        interface Request {
+            user?: Pick<User, 'id' | 'email' | 'name'>;
+            sessionId?: string;
+        }
+    }
+}
+
+export { };
