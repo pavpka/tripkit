@@ -85,6 +85,12 @@ export function getTripDaysCount(trip: Trip) {
         : 0;
 }
 
+export function getTripDaysLeft(trip: Trip) {
+    return trip.endDate
+        ? countDaysInclusive(new Date(), trip.endDate)
+        : 0;
+}
+
 const formatHintDate = (date: Date) =>
     date
         .toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })
@@ -113,7 +119,7 @@ export const getStatusHint = (trip: Trip, tripActivitiesCount: number) => {
         case 'booked':
             return getBookedHint(trip, new Date());
         case 'ongoing':
-            return `Осталось ${getTripDaysCount(trip)} дней поездки`;
+            return `Осталось ${getTripDaysLeft(trip)} дней поездки`;
         case 'done':
             return 'Поездка завершена';
         default:

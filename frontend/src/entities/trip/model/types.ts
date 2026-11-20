@@ -22,8 +22,9 @@ export interface Trip {
     emoji: string;
     titleColor: string;
 
-    packingItemsCount?: number;
-    packedItemsCount?: number;
+    packingItemsCount: number;
+    packedItemsCount: number;
+    plannedExpenses: number;
 }
 
 export type TripStatus =

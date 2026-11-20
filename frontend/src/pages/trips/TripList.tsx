@@ -1,6 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { expenses } from '@/mocks/data';
-import { sumExpense } from '@/entities/expense';
 import { tripQueries } from '@/entities/trip';
 import TripCard from './TripCard';
 
@@ -30,10 +28,7 @@ export default function TripList() {
                 }}
             >
                 {trips.map((trip) => {
-                    const spent = sumExpense(
-                        expenses.filter((e) => e.tripId === trip.id),
-                    );
-                    return <TripCard key={trip.id} trip={trip} spent={spent} />;
+                    return <TripCard key={trip.id} trip={trip} />;
                 })}
             </div>
         </div>

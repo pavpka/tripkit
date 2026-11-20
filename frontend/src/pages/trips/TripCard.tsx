@@ -11,14 +11,8 @@ import {
 import { ProgressBar } from '@/shared/ui/ProgressBar';
 import { formatDateRange } from '@/shared/lib/dates';
 
-export default function TripCard({
-    trip,
-    spent,
-}: {
-    trip: Trip;
-    spent: number;
-}) {
-    const { status, percent } = getBudgetState(spent, trip.budgetTotal);
+export default function TripCard({ trip }: { trip: Trip; }) {
+    const { status, percent } = getBudgetState(trip.plannedExpenses, trip.budgetTotal);
     const statusMeta = getTripStatusMeta(trip.status);
     const statusColors = COLORS[statusMeta.color];
     const { packingItemsCount, packedItemsCount = 0 } = trip;

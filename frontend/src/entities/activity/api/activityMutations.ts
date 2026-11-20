@@ -3,6 +3,7 @@ import type { TripId } from '@/shared/types';
 import type { Activity, ActivityInput } from '../model/types';
 import { activityApi } from './activityApi';
 import { activityQueries } from './activityQueries';
+import { tripQueries } from '@/entities/trip';
 
 export function useCreateActivity(tripId: TripId) {
     const queryClient = useQueryClient();
@@ -11,7 +12,10 @@ export function useCreateActivity(tripId: TripId) {
     return useMutation({
         mutationFn: (activity: ActivityInput) =>
             activityApi.create(tripId, activity),
-        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+        onSettled: () => Promise.all([
+            queryClient.invalidateQueries({ queryKey }),
+            queryClient.invalidateQueries({ queryKey: tripQueries.list().queryKey }),
+        ]),
     });
 }
 
@@ -20,7 +24,7 @@ export function useUpdateActivity(tripId: TripId) {
     const { queryKey } = activityQueries.byTrip(tripId);
 
     return useMutation({
-        mutationFn: ({id, tripId: _, ...input}: Activity) =>
+        mutationFn: ({ id, tripId: _, ...input }: Activity) =>
             activityApi.update(tripId, id, input),
         onMutate: async (updated) => {
             await queryClient.cancelQueries({ queryKey });
@@ -34,6 +38,9 @@ export function useUpdateActivity(tripId: TripId) {
             if (context?.previous)
                 queryClient.setQueryData(queryKey, context.previous);
         },
-        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+        onSettled: () => Promise.all([
+            queryClient.invalidateQueries({ queryKey }),
+            queryClient.invalidateQueries({ queryKey: tripQueries.list().queryKey }),
+        ]),
     });
 }

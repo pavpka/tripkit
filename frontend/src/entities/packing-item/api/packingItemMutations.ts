@@ -3,6 +3,7 @@ import type { TripId } from '@/shared/types';
 import type { PackingItem, PackingItemInput } from '../model/types';
 import { packingItemApi } from './packingItemApi';
 import { packingItemQueries } from './packingItemQueries';
+import { tripQueries } from '@/entities/trip';
 
 export function useCreatePackingItem(tripId: TripId) {
     const queryClient = useQueryClient();
@@ -11,7 +12,10 @@ export function useCreatePackingItem(tripId: TripId) {
     return useMutation({
         mutationFn: (item: PackingItemInput) =>
             packingItemApi.create(tripId, item),
-        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+        onSettled: () => Promise.all([
+            queryClient.invalidateQueries({ queryKey }),
+            queryClient.invalidateQueries({ queryKey: tripQueries.list().queryKey }),
+        ]),
     });
 }
 
@@ -35,7 +39,10 @@ export function useUpdatePackingItem(tripId: TripId) {
             if (context?.previous)
                 queryClient.setQueryData(queryKey, context.previous);
         },
-        onSettled: () => queryClient.invalidateQueries({ queryKey }),
+        onSettled: () => Promise.all([
+            queryClient.invalidateQueries({ queryKey }),
+            queryClient.invalidateQueries({ queryKey: tripQueries.list().queryKey }),
+        ]),
     });
 }
 

@@ -17,9 +17,10 @@ export interface TripDto {
     createdAt: string;
     updatedAt: string;
 
-   
-    packingItemsCount?: number;
-    packedItemsCount?: number;
+
+    packingItemsCount: number;
+    packedItemsCount: number;
+    plannedExpenses: number;
 }
 
 export const mapTripDto = (dto: TripDto): Trip => ({
@@ -39,4 +40,5 @@ export const mapTripDto = (dto: TripDto): Trip => ({
     updatedAt: dto.updatedAt,
     packingItemsCount: dto.packingItemsCount,
     packedItemsCount: dto.packedItemsCount,
+    plannedExpenses: dto.plannedExpenses,
 });
