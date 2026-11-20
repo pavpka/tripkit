@@ -9,6 +9,7 @@ import { dayQueries, type Day } from '@/entities/day';
 import styles from './ItineraryTab.module.scss';
 import { AssignActivityDndProvider } from '@/features/activity-dnd';
 import { SummaryCard } from '@/widgets/summary-card';
+import { getCurrencySymbol } from '@/shared/lib/money';
 
 export default function ItineraryTab() {
 
@@ -32,7 +33,14 @@ export default function ItineraryTab() {
     const closeModal = () => setModalIsOpen(false);
 
     let maxOrder = -1;
+    let waitingBookingCount = 0;
+    let plannedAmount = 0;
     places.forEach(activity => {
+        if (activity.bookingStatus === 'todo') {
+            waitingBookingCount++;
+        }
+        plannedAmount += activity.costEstimate ?? 0;
+
         if (activity.order > maxOrder) {
             maxOrder = activity.order;
         }
@@ -45,7 +53,7 @@ export default function ItineraryTab() {
                 <DayList days={days} activities={places} openModal={openModal} />
                 <div className={styles.itineraryTabRight}>
                     <NoDayCard activities={places} openModal={() => openModal(null)} />
-                    <SummaryCard />
+                    <SummaryCard activitiesCount={places.length} daysCount={days.length} waitingBookingCount={waitingBookingCount} plannedAmount={plannedAmount + getCurrencySymbol(trip.currency)} />
                 </div>
             </AssignActivityDndProvider>
             {modalIsOpen && (

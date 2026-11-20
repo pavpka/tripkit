@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { ActivityId, TripId } from '@/shared/types';
+import type { TripId } from '@/shared/types';
 import type { Activity, ActivityInput } from '../model/types';
 import { activityApi } from './activityApi';
 import { activityQueries } from './activityQueries';

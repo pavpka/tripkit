@@ -1,5 +1,5 @@
 import type { TripId } from '@/shared/types';
-import { type Activity, useUpdateActivity } from '@/entities/activity';
+import { useUpdateActivity } from '@/entities/activity';
 import type { DragEndEvent } from '@dnd-kit/core';
 import type { DragData, DropData } from './dnd';
 
