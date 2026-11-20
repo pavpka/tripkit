@@ -1,7 +1,7 @@
 import type { CreateTripInput, Trip } from './trips.types.js';
 import { db } from '../../db.js';
-import { trips as tripsTable } from '../../db/schema.js';
-import { and, eq } from 'drizzle-orm';
+import { activities, packingItems, trips as tripsTable } from '../../db/schema.js';
+import { and, count, eq, getTableColumns, sql, sum } from 'drizzle-orm';
 import type { DaysRepository } from '../days/days.repository.js';
 
 export interface TripsRepository {
@@ -12,13 +12,48 @@ export interface TripsRepository {
     update(id: string, trip: CreateTripInput, ownerId: string): Promise<boolean>;
 }
 
+const plannedExpenses = db
+    .select({
+        tripId: activities.tripId,
+        plannedExpense: sum(activities.costEstimate).as('planned_expense'),
+    })
+    .from(activities)
+    .groupBy(activities.tripId)
+    .as('planned_expenses');
+
+const packingStats = db
+    .select({
+        tripId: packingItems.tripId,
+        packingItemsCount: count().as('packing_items_count'),
+        packedItemsCount: sql<number>`
+            count(*) filter (where ${packingItems.packed})
+        `.mapWith(Number).as('packed_items_count'),
+    })
+    .from(packingItems)
+    .groupBy(packingItems.tripId)
+    .as('packing_stats');
 
 export class PostgresTripsRepository implements TripsRepository {
     constructor(private readonly daysRepository: DaysRepository) { }
 
     async findAll(ownerId: string): Promise<Trip[]> {
-        const trips = await db.select().from(tripsTable).where(eq(tripsTable.ownerId, ownerId));
-        return trips;
+        const rows = await db
+            .select({
+                ...getTableColumns(tripsTable),
+                plannedExpenses: plannedExpenses.plannedExpense,
+                packingItemsCount: packingStats.packingItemsCount,
+                packedItemsCount: packingStats.packedItemsCount,
+            })
+            .from(tripsTable)
+            .leftJoin(plannedExpenses, eq(plannedExpenses.tripId, tripsTable.id))
+            .leftJoin(packingStats, eq(packingStats.tripId, tripsTable.id))
+            .where(eq(tripsTable.ownerId, ownerId));
+        return rows.map((row) => ({
+            ...row,
+            plannedExpense: row.plannedExpenses ?? 0,
+            packingItemsCount: row.packingItemsCount ?? 0,
+            packedItemsCount: row.packedItemsCount ?? 0,
+        }));
     }
     async findById(id: string, ownerId: string): Promise<Trip | undefined> {
         const [trip] = await db.select().from(tripsTable)
