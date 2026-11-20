@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 import RootLayout from '@/app/layouts/RootLayout';
-import { DashboardPage as Dashboard } from '@/pages/dashboard';
 import { TripsPage as Trips } from '@/pages/trips';
 import {
     BudgetTab as Budget,
@@ -12,6 +11,11 @@ import {
 import { SettingsPage as Settings } from '@/pages/settings';
 import { NotFoundPage as NotFound } from '@/pages/not-found';
 import ErrorBoundaryPage from '@/app/ui/ErrorBoundaryPage';
+import ProtectedRoute from './ProtectedRoute';
+import HomeRoute from './HomeRoute';
+import GuestOnlyRoute from './GuestOnlyRoute';
+import { LoginPage as Login } from '@/pages/login';
+import { RegisterPage as Register } from '@/pages/register';
 
 export const router = createBrowserRouter([
     {
@@ -19,24 +23,35 @@ export const router = createBrowserRouter([
         element: <RootLayout />,
         errorElement: <ErrorBoundaryPage />,
         children: [
-            { index: true, element: <Dashboard /> },
-            { path: 'trips', element: <Trips /> },
+            { index: true, element: <HomeRoute /> },
             {
-                path: 'trips/:tripId',
-                element: <TripDetailLayout />,
+                element: <GuestOnlyRoute />,
                 children: [
-                    // При переходе на /trips/123 автоматически редиректим на вкладку Overview
-                    {
-                        index: true,
-                        element: <Navigate to="overview" replace />,
-                    },
-                    { path: 'overview', element: <Overview /> },
-                    { path: 'itinerary', element: <Itinerary /> },
-                    { path: 'budget', element: <Budget /> },
-                    { path: 'packing', element: <Packing /> },
+                    { path: 'login', element: <Login /> },
+                    { path: 'register', element: <Register /> },
                 ],
             },
-            { path: 'settings', element: <Settings /> },
+            {
+                element: <ProtectedRoute />,
+                children: [
+                    { path: 'trips', element: <Trips /> },
+                    {
+                        path: 'trips/:tripId',
+                        element: <TripDetailLayout />,
+                        children: [
+                            {
+                                index: true,
+                                element: <Navigate to="overview" replace />,
+                            },
+                            { path: 'overview', element: <Overview /> },
+                            { path: 'itinerary', element: <Itinerary /> },
+                            { path: 'budget', element: <Budget /> },
+                            { path: 'packing', element: <Packing /> },
+                        ],
+                    },
+                    { path: 'settings', element: <Settings /> },
+                ],
+            },
         ],
     },
     { path: '*', element: <NotFound /> },

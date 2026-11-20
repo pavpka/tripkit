@@ -1,0 +1,76 @@
+.welcomePage {
+    padding: 27px 56px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    h1 {
+        font-family: var(--font-display);
+    }
+
+    .highlight {
+        color: var(--color-accent);
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .description {
+        margin: 24px 0;
+        color: var(--color-muted);
+        width: 45%;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .buttonContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+            padding: 16px 32px;
+        }
+
+        .haveAccount {
+            margin-top: 12px;
+            color: var(--color-muted);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.45;
+
+            .loginLink {
+                color: var(--color-accent-deep);
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+
+}
+
+.welcome-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 16px;
+    margin-bottom: 50px;
+}
+
+.welcome-page-logo {
+    height: 36px;
+}
+
+.login-button {
+    display: inline-block;
+
+    button {
+        background-color: transparent;
+        color: var(--color-text)
+    }
+}

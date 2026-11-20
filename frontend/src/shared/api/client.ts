@@ -33,6 +33,7 @@ async function parseBody<T>(response: Response): Promise<T> {
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
     const response = await fetch(`${BASE_URL}${path}`, {
+        credentials: 'include',
         ...init,
         headers: buildHeaders(init?.headers),
     });
